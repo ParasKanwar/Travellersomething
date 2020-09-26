@@ -4,11 +4,8 @@ import {
   isUserAuthorized,
   loginUser,
   userLogout,
-} from "../graph/queries";
+} from "../graph/userMutations";
 export const ApiResolver = {
-  getHello() {
-    return "Hello";
-  },
   async newUser({ user }: { user: User }) {
     return await createUser({
       payload: { ...user, PhoneVerified: false, EmailVerified: false },

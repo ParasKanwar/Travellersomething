@@ -10,6 +10,7 @@ type User{
     username:String
     token:String
 }
+
 input SignUpInput{
     name:String!
     password:String!

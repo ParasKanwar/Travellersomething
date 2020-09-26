@@ -1,2 +1,4 @@
 /node_modules/
-/dump.rdb/
+dump.rdb
+/build/
+/neo4j/

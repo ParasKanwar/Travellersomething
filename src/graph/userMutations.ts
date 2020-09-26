@@ -6,11 +6,21 @@ import { userValidator } from "./validators";
 import { sign, verify } from "jsonwebtoken";
 import validator from "validator";
 import { createClient } from "redis";
-const redisClient = createClient();
+const redisClient = createClient({ host: "redis" });
 const neo4jDriver = driver(
-  "bolt://localhost:7687",
-  auth.basic("neo4j", "8178808681")
+  !process.env.isProd ? "bolt://localhost:7687" : "neo4j://graphdb:7687",
+  auth.basic("neo4j", "ILoveOpenSource")
 );
+
+export async function initializeDatabaseConstraints() {
+  const session = neo4jDriver.session();
+  session
+    .run("call db.constraints()")
+    .then((val) => console.log(val))
+    .catch((e) => {
+      console.log(e.message);
+    });
+}
 
 export async function createUser({ payload }: { payload: User }) {
   try {
